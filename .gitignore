@@ -1,0 +1,6 @@
+db.sqlite3
+*.pyc
+*.pot
+local_settings.py
+.venv
+uploads
