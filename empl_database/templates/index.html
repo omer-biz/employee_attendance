@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digital Attendance Sheet</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css'>
+    <link rel="stylesheet" href="{% static "res/main.css" %}">
+<head>
+<body>
+
+{% if msg %}
+    <div id="msg" style="background: {{ hint_color }};">
+        {{ msg }} <a id="close">×</a>
+    </div>
+{% endif %}
+
+    <form action="{% url 'search_result' %}" method="get">
+        <input id="search-it" name="q" type="text" placeholder="Scan QR code">
+        <input id="submit-btn" type="submit" value="OK">
+    </form>
+
+    <nav>
+        <a href='/'><button class="primary">Home</button></a> 
+        <a href='/admin'><button class="primary">Admin</button></a>
+    </nav>
+
+{% if employee %}
+<div class="card-container">
+    <img src="{{ employee.image.url }}" alt="user"/>
+    <h3>{{ employee.full_name }}</h3>
+    <h6>{{ employee.department }}</h6>
+    <p>{{ employee.occupation }}</p>
+    <div class="buttons">
+        <button class="primary ghost">
+            {{ percent }}%
+        </button>
+    </div>
+    <div class="skills">
+        <h6>Latest absents of this month</h6>
+        <ul>
+            {% for la in latest_absents %}
+            <li>{{ la }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+
+    <script>
+        document.getElementById("search-it").focus();
+
+         close = document.getElementById("close");
+         close.addEventListener('click', function() {
+            note = document.getElementById("msg");
+            note.style.display = 'none';
+         }, false);
+    </script>
+</body>
+</html>

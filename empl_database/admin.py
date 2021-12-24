@@ -3,12 +3,12 @@ from django.contrib.auth.models import Group
 from django.db import models
 from django.forms import NumberInput
 
-from .models import AttendanceConstraint, Department, Employee, Attendance
+from .models import AttendanceConstraint, Department, Employee, Attendance, Permission, PermissionHistory
 
 @admin.register(Employee)
 class EmployeeDefined(admin.ModelAdmin):
     list_display = ('full_name', 'occupation', 'department', 'sex', 'id_number',
-                    'attendance_constraint',)
+                    'attendance_constraint', 'permission')
     list_filter = ('occupation', 'sex', 'department')
     search_fields = ('full_name', 'occupation', 'id_number')
     formfield_overrides = {
@@ -31,17 +31,17 @@ class AttendanceConstraintDefined(admin.ModelAdmin):
     list_display = (
         'constraint_name',
 
-        # 'mg_en_str',
-        # 'mg_en_stp',
+        'mg_en_str',
+        'mg_en_stp',
 
-        # 'mg_ex_str',
-        # 'mg_ex_stp',
+        'mg_ex_str',
+        'mg_ex_stp',
 
-        # 'an_en_str',
-        # 'an_en_stp',
+        'an_en_str',
+        'an_en_stp',
 
-        # 'an_ex_str',
-        # 'an_ex_stp',
+        'an_ex_str',
+        'an_ex_stp',
     )
 
 @admin.register(Department)
@@ -49,6 +49,16 @@ class DepartmentDefined(admin.ModelAdmin):
     list_display = ('department',)
     search_fields = ('department',)
     list_filter = ('department',)
+
+@admin.register(Permission)
+class PermissionDefined(admin.ModelAdmin):
+    list_display = ('permission_name', 'permission_start', 'permission_stop',)
+
+@admin.register(PermissionHistory)
+class PermissionHistoryDefined(admin.ModelAdmin):
+    list_display = ('permission_name', 'permission_stop', 'permission_start', 'permission_owner', )
+    search_fields = ('permission_owner', 'permission_name')
+    list_filter = ('permission_owner', 'permission_name')
 
 
 admin.site.unregister(Group)

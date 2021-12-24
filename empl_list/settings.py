@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'adminlte3',
+    'adminlte3_theme',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'empl_database',
-
 ]
 
 MIDDLEWARE = [
@@ -120,7 +122,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 MEDIA_URL = '/uploads/'
