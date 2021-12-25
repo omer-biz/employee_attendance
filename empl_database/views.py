@@ -22,16 +22,23 @@ def search(request):
                        context={'msg': 'Employee Not Found',
                                 'hint_color':hint_color_red})
 
+    today = date.today()
+    start_of_month = date(today.year, today.month, 1)
+
+    print(f"Today: {today.weekday}")
+
+    if today.weekday() == 5 or today.weekday() == 6:
+        return render(request, 'index.html', context={
+            'msg': 'You can not take attendance on weekends',
+            'hint_color': hint_color_blue,
+        })
+
     try:
         attendance = Attendance.objects.get(employee=employee, 
                                             date=date.today())
     except:
         attendance = Attendance.objects.create(date=date.today(), 
                                                employee=employee)
-
-    today = date.today()
-    start_of_month = date(today.year, today.month, 1)
-
 
 
     if employee.permission != None:
