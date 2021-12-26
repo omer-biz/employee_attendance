@@ -10,7 +10,17 @@ def search(request):
     hint_color_red = '#f44336'
     hint_color_green = '#04AA6D'
     hint_color_blue = '#2196F3'
-    hint_color_yellow = '#ff9800'
+    # hint_color_yellow = '#ff9800'
+
+    today = date.today()
+    start_of_month = date(today.year, today.month, 1)
+
+    # if today.weekday() == 5 or today.weekday() == 6:
+    #     return render(request, 'index.html', context={
+    #         'msg': 'You can not take attendance on weekends',
+    #         'hint_color': hint_color_blue,
+    #     })
+
     # Get the employee with id_number
     try:
         query = request.GET.get('q')
@@ -22,24 +32,12 @@ def search(request):
                        context={'msg': 'Employee Not Found',
                                 'hint_color':hint_color_red})
 
-    today = date.today()
-    start_of_month = date(today.year, today.month, 1)
-
-    print(f"Today: {today.weekday}")
-
-    if today.weekday() == 5 or today.weekday() == 6:
-        return render(request, 'index.html', context={
-            'msg': 'You can not take attendance on weekends',
-            'hint_color': hint_color_blue,
-        })
-
     try:
         attendance = Attendance.objects.get(employee=employee, 
                                             date=date.today())
     except:
         attendance = Attendance.objects.create(date=date.today(), 
                                                employee=employee)
-
 
     if employee.permission != None:
         # check if the permission is expried
@@ -111,7 +109,7 @@ def search(request):
     # This is not the time to take attendances
     else:
         msg = f"You cannot take attendance now"
-        hint_color = hint_color_yellow
+        hint_color = hint_color_red
 
 
     atns = Attendance.objects.filter(employee=employee)
