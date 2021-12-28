@@ -6,6 +6,38 @@ from .models import Employee, Attendance, PermissionHistory
 def index(request):
     return render(request, 'index.html')
 
+def generate_sheet(request):
+    employees = Employee.objects.all()
+
+    today = date.today()
+    start_of_month = date(today.year, today.month, 1)
+
+    absent_sheet ={}
+    for empl in employees:
+        absent_sheet[empl.full_name] = {}
+        for atn in Attendance.objects.filter(employee=empl):
+            if atn.date >= start_of_month and atn.date < today:
+                cur_date = atn.date.strftime('%b, %d')
+                absent_sheet[empl.full_name][cur_date] = []
+
+                if atn.morning_entry == None:
+                    absent_sheet[empl.full_name][cur_date].append(atn.date.strftime('%A Morning Entry'))
+                if atn.morning_exit == None:
+                    absent_sheet[empl.full_name][cur_date].append(atn.date.strftime('%A Morning Exit'))
+
+                if atn.afternoon_entry == None:
+                    absent_sheet[empl.full_name][cur_date].append(atn.date.strftime('%A Afternoon Entry'))
+                if atn.afternoon_exit == None:
+                    absent_sheet[empl.full_name][cur_date].append(atn.date.strftime('%A Afternoon Exit'))
+
+    print(absent_sheet)
+    return render(request, 'sheet.html', context={
+        'absent_sheet': absent_sheet,
+        'start_of_month': start_of_month.strftime('%b, %d %Y'),
+        'today': today.strftime('%b, %d %Y')
+    })
+
+
 def search(request):
     hint_color_red = '#f44336'
     hint_color_green = '#04AA6D'
@@ -142,6 +174,6 @@ def search(request):
         'employee': employee, 
         'msg': msg,
         'percent': f"{percent:3.2f}",
-        'latest_absents': latest_absents[:5],
+        'latest_absents': latest_absents[:3],
         'hint_color': hint_color,
     })
