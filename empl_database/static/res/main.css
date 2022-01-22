@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat'); */
 
 
 * {
@@ -8,7 +8,6 @@
 body {
 	background-image: linear-gradient(to right top, #3c3836, #505945, #665c54, #7c6f64, #928374);
 	font-family: Montserrat, sans-serif;
-	
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -60,10 +59,10 @@ p {
 
 .card-container img {
 	border: 1px solid #fbf1c7;
-	border-radius: 50%;
+	border-radius: 5%;
 	padding: 7px;
-	height: 150px;
-	width: 150px;
+	height: 200px;
+	width: auto;
 }
 
 button.primary {
@@ -71,6 +70,16 @@ button.primary {
 	border: 1px solid #282828;
 	border-radius: 3px;
 	color: #fff;
+	font-family: Montserrat, sans-serif;
+	font-weight: 500;
+	padding: 10px 25px;
+}
+
+button.focused {
+	background-color: #fbf1c7;
+	border: 1px solid #282828;
+	border-radius: 3px;
+	color: #282828;
 	font-family: Montserrat, sans-serif;
 	font-weight: 500;
 	padding: 10px 25px;
@@ -153,3 +162,4 @@ button.primary.ghost {
 nav {
     margin: 20px;
 }
+

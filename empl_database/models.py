@@ -54,6 +54,7 @@ class Permission(models.Model):
     permission_start = models.DateField('Permission Start')
     permission_stop = models.DateField('Permission Stop')
     permission_name = models.CharField('Permission Name', max_length=256)
+    letter_of_permission = models.FileField('Letter of permission')
 
     def __str__(self):
         return self.permission_name
@@ -84,6 +85,8 @@ class Employee(models.Model):
                                               on_delete=models.CASCADE)
     permission = models.ForeignKey(Permission, on_delete=models.CASCADE, blank=True, null=True)
 
+    salary = models.FloatField()
+
     def __str__(self):
         return self.full_name
 
@@ -100,18 +103,12 @@ class Attendance(models.Model):
         ('permission', 'Permission'),
     )
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    date = models.DateField('Date', auto_now=True)
+    date = models.DateField('Date', auto_now=True, )
 
     morning_entry = models.TimeField('Morning Entry', blank=True, null=True)
     morning_exit = models.TimeField('Morning Exit', blank=True, null=True)
     afternoon_entry = models.TimeField('Afternoon Entry', blank=True, null=True)
     afternoon_exit = models.TimeField('Afternoon Exit', blank=True, null=True)
-
-    morning_status = models.CharField('Morning Status', blank=True, null=True,
-        max_length=20, choices=STATUS)
-
-    afternoon_status = models.CharField('Afternoon Status', blank=True,
-        null=True, max_length=20, choices=STATUS)
 
     def __str__(self):
         return f"Attns for {self.employee}"
@@ -121,6 +118,7 @@ class PermissionHistory(models.Model):
     permission_start = models.DateField('Permission Start')
     permission_stop = models.DateField('Permission Stop')
     permission_name = models.CharField('Permission Name', max_length=256)
+    letter_of_permission = models.FileField('Letter of permission')
 
     permission_owner = models.ForeignKey(Employee, on_delete=models.CASCADE)
 

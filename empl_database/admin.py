@@ -18,7 +18,12 @@ class EmployeeDefined(admin.ModelAdmin):
 @admin.register(Attendance)
 class AttendanceDefined(admin.ModelAdmin):
     list_filter = ('date', 'employee',)
-    search_fields = ('employee__full_name', )
+    search_fields = ('employee__full_name', 'date')
+    readonly_fields = ( 
+        'employee',
+        'morning_entry', 'morning_exit',
+        'afternoon_entry', 'afternoon_exit',
+    )
     list_display = (
         'employee', 'date', 'morning_entry', 'morning_exit',
         'afternoon_entry', 'afternoon_exit',
@@ -56,10 +61,11 @@ class PermissionDefined(admin.ModelAdmin):
 
 @admin.register(PermissionHistory)
 class PermissionHistoryDefined(admin.ModelAdmin):
-    list_display = ('permission_name', 'permission_stop', 'permission_start', 'permission_owner', )
+    readonly_fields = ('permission_name', 'permission_start', 'permission_stop', 'permission_owner', )
+    list_display = ('permission_name', 'permission_start', 'permission_stop', 'permission_owner', )
     search_fields = ('permission_owner', 'permission_name')
     list_filter = ('permission_owner', 'permission_name')
 
 
 admin.site.unregister(Group)
-admin.site.site_header = "Hararii TVET Agency Attendance Sheet 爐"
+admin.site.site_header = "Hararii TVET Agency Digital Attendance Sheet 爐"

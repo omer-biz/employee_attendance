@@ -1,0 +1,66 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+  <style>
+table {
+  border: 1px black solid;
+  margin: 30px 10px;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px black solid;
+}
+
+th {
+  text-align: left;
+  padding-left: 5px;
+}
+
+  </style>
+  </head>
+
+  <body>
+    <center>
+
+    {% if absent_sheet %}
+      {% for key, val in absent_sheet.items %}
+        <table>
+          <tr>
+          <th colspan=5>{{ key }}</th>
+          </tr>
+            {% for k2, v2 in val.items %}
+              <tr>
+                <td>{{ k2 }}</td>
+                {% for itm in v2 %}
+                <td>{{ itm }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+        </table>
+      {% endfor %}
+    {% endif %}
+
+    {% if employees_salary %}
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Salary</th>
+          <th>Reduction(%)</th>
+        </tr>
+      {% for k, v in employees_salary.items %}
+        <tr>
+        <td>{{ k }}</td>
+
+        <td>{{ v.0 }} Birr</td>
+        <td>{{ v.1 }}%</td>
+
+        </tr>
+      {% endfor %}
+      </table>
+    {% endif %}
+
+    </center>
+  </body>
+</html>

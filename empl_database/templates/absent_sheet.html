@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <form method='GET' action="{% url 'generate_sheet' %}">
+      <label for="start">Start</label>
+      <input name="start" type="date">
+
+      <label for="end">End</label>
+      <input name="end" type="date">
+
+      <input type="submit" value="Generate">
+    </form>
+{% endblock %}
+
+
+{% block footer %}
+            <a href='/'><button class="primary">Home</button></a> 
+            <a href='/admin'><button class="primary">Admin</button></a>
+            <a href='/generate_sheet'><button class="focused">Generate Sheet</button></a>
+            <a href='/generate_salary'><button class="primary">Generate Salary</button></a>
+{% endblock %}

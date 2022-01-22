@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Digital Attendance Sheet</title>
+    <link rel="stylesheet" href="{% static "res/main.css" %}">
+<head>
+<body>
+    {% if msg %}
+        <div id="msg" style="background: {{ hint_color }};">
+            {{ msg }} <a id="close">×</a>
+        </div>
+        <script>
+         close = document.getElementById("close");
+         close.addEventListener('click', function() {
+            note = document.getElementById("msg");
+            note.style.display = 'none';
+         }, false);
+        </script>
+    {% endif %}
+
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+        <nav>
+            {% block footer %}
+            {% endblock %}
+        </nav>
+    </footer>
+
+    <script>document.getElementById("search-it").focus();</script>
+
+</body>
+</html>
