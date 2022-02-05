@@ -201,7 +201,9 @@ def search(request):
                 msg = "Morning Entry Attendance Already Taken"
                 hint_color = hint_color_blue
 
-        elif now >= atn_const.mg_ex_str and now <= atn_const.mg_ex_stp:
+        elif (now >= atn_const.mg_ex_str and now <= atn_const.mg_ex_stp) \
+                or (today.weekday() == 4 
+                    and (now >= atn_const.mg_ex_str_fr and now <= atn_const.mg_ex_stp)):
 
             if attendance.morning_exit == None:
                 attendance.morning_exit = datetime.now().time()

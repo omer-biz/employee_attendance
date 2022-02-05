@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import time
 
 class Department(models.Model):
     '''
@@ -32,20 +33,24 @@ class AttendanceConstraint(models.Model):
 
     an_ex_str: afernoon exit start
     an_ex_stp: afernoon exit stop
+
+    mg_ex_stp_fr: friday morning exit stop
     '''
-    constraint_name = models.CharField('Constraint Name', max_length=120)
+    constraint_name = models.CharField('Constraint Name', default="Normal", max_length=120)
 
-    mg_en_str = models.TimeField('Morning Entry Start ⤵')
-    mg_en_stp = models.TimeField('Morning Entry Stop  ⤴')
+    mg_en_str = models.TimeField('Morning Entry Start ⤵', default=time(7, 30))
+    mg_en_stp = models.TimeField('Morning Entry Stop  ⤴', default=time(9))
     
-    mg_ex_str = models.TimeField('Morning Exit Start ⤵')
-    mg_ex_stp = models.TimeField('Morning Exit Stop  ⤴')
+    mg_ex_str = models.TimeField('Morning Exit Start ⤵', default=time(11, 45))
+    mg_ex_stp = models.TimeField('Morning Exit Stop  ⤴', default=time(13, 30))
 
-    an_en_str = models.TimeField('Afternoon Entry Start ⤵')
-    an_en_stp = models.TimeField('Afternoon Entry Stop  ⤴')
+    an_en_str = models.TimeField('Afternoon Entry Start ⤵', default=time(14))
+    an_en_stp = models.TimeField('Afternoon Entry Stop  ⤴', default=time(15))
 
-    an_ex_str = models.TimeField('Afternoon Exit Start ⤵')
-    an_ex_stp = models.TimeField('Afternoon Exit Stop  ⤴')
+    an_ex_str = models.TimeField('Afternoon Exit Start ⤵', default=time(16, 45))
+    an_ex_stp = models.TimeField('Afternoon Exit Stop  ⤴', default=time(18, 0))
+
+    mg_ex_str_fr = models.TimeField('Friday Morning Exit Start ⤵', default=time(10, 45))
 
     def __str__(self):
         return f"Constraint: {self.constraint_name}"
@@ -61,7 +66,7 @@ class Permission(models.Model):
 
 class Employee(models.Model):
     '''
-    Employee informations like:
+    Employee information like:
         - Full Name
         - Occupation
         - Sex
@@ -77,7 +82,7 @@ class Employee(models.Model):
     full_name = models.CharField('Full Name', max_length=70)
     occupation = models.CharField('Occupation', max_length=256)
     sex = models.CharField('Sex', choices=GENDER, max_length=10)
-    id_number = models.IntegerField('ID Number')
+    id_number = models.CharField('ID Number', unique=True, max_length=50)
     image = models.ImageField(upload_to='photos')
 
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
