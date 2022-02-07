@@ -86,11 +86,17 @@ button.focused {
 }
 
 input#search-it {
-   padding: 5px 15px; 
+	padding: 0px;
+	margin: 0px;
+	font-size: 0px;
+	border: 0px;
+	background-color: transparent;
+	resize: none;
+	outline: none;
 }
 
 input#submit-btn {
-    padding: 5px 15px;
+    padding: 5px 5px;
 }
 
 button.primary.ghost {
